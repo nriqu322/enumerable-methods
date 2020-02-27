@@ -1,6 +1,7 @@
 module Enumerable
   def my_each
-    # iterate trough an object
+    # iterate trough an object, takes one parameter
+    return to_enum unless block_given?
     i = 0
     while i < length
       yield(self[i])
@@ -9,23 +10,29 @@ module Enumerable
   end
 
   def my_each_with_index
-    # iterate trough an object
-    idx = 0
-    while idx < length
-      yield(self[idx], idx)
-      idx += 1
-    end
+    # iterate trough an object value and index, takes two parameters
+    return to_enum unless block_given?
+      idx = 0
+      while idx < length
+        yield(self[idx], idx)
+        idx += 1
+      end
   end
+
+  #def my_select
+    # 
+  #end
 end
 
-# test my_each
-# array = %w[5 2 7 4 1]
-# array.each { |x| puts x.to_i * 2 }
-# puts
-# array.my_each { |x| puts x.to_i * 2 }
+#array = %w[5 2 7 4 1]
 
-# test my_each_with_index
-# array.each_with_index { |val, idx| puts "value #{val} : idx #{idx}" }
-# puts
-# array.my_each_with_index { |val, idx| puts "value #{val} : idx #{idx}" }
-# puts
+#test my_each
+#array.each { |x| puts x.to_i * 2 }
+#puts
+#array.my_each { |x| puts x.to_i * 2 }
+#puts
+
+#test my_each_with_index
+#array.each_with_index { |val, idx| puts "value #{val} : idx #{idx}" }
+#puts
+#array.my_each_with_index { |val, idx| puts "value #{val} : idx #{idx}" }
