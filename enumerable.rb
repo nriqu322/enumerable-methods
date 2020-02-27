@@ -19,12 +19,16 @@ module Enumerable
       end
   end
 
-  #def my_select
-    # 
-  #end
+  def my_select
+    #filters values given a condition
+    return to_enum unless block_given?
+    new_array = []
+    self.my_each { |x| new_array.push(x) if yield(x) }
+    new_array
+  end
 end
 
-#array = %w[5 2 7 4 1]
+array = %w[5 2 7 4 1]
 
 #test my_each
 #array.each { |x| puts x.to_i * 2 }
@@ -36,3 +40,10 @@ end
 #array.each_with_index { |val, idx| puts "value #{val} : idx #{idx}" }
 #puts
 #array.my_each_with_index { |val, idx| puts "value #{val} : idx #{idx}" }
+#puts
+
+#test my_select
+array.select { |x| puts x if x.to_i < 5 }
+puts
+array.my_select { |x| puts x if x.to_i < 5 }
+puts
