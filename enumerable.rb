@@ -1,0 +1,26 @@
+module Enumerable
+  def my_each
+    # iterate trough an object
+    i = 0
+    while i < length
+      yield(self[i])
+      i += 1
+    end
+  end
+
+  # test my_each
+  array = %w[1 2 3 4 5]
+  array.each { |_x| puts. x.to_i * 2 }
+  puts
+  array.my_each { |x| puts x.to_i * 2 }
+  puts
+
+  def my_each_with_index
+    # iterate trough an object
+    i = 0
+    while i < length
+      yield(self[idx])
+      i += idx
+    end
+  end
+end
