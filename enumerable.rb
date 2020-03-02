@@ -106,12 +106,10 @@ module Enumerable
     total
   end
 
-  def my_map
-    return to_enum :my_map unless block_given?
+  def my_map(proc = nil)
+    return to_enum :my_map unless proc.class == Proc
     new_array = []
-
-      my_each { |x| new_array << yield(x)}
-
+    my_each { |x| new_array << proc.call(x) }
     new_array
   end
 end
@@ -120,3 +118,10 @@ end
 [1, 2, 3, 4].my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
 (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
 (1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
+
+array = [4, 5, 5]
+my_proc = proc do |num|
+  num * 2
+end
+result = array.my_map(my_proc)
+puts result
