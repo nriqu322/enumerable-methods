@@ -2,19 +2,17 @@
 This is a replica of the enumerable methods in Ruby: each, each_with_index, select, all?, any?, none?, count, map and inject.
 
 # From the Odin Project
-*Link to the [requirements](https://www.theodinproject.com/courses/ruby-programming/lessons/advanced-building-blocks) in the Odin Project*
-Assignment 2
+*Link to the [requirements](https://www.theodinproject.com/courses/ruby-programming/lessons/advanced-building-blocks) in the Odin Project: Assignment 2*
 
 ## Live Demo
 
-[![Run on Repl.it]](https://repl.it/@nriqu322/enumerable-methods)(available after merge with master)
+[Run on Repl.it](https://repl.it/@nriqu322/enumerable-methods)(available after merge with master)
 
 ## Getting Started
 
 ### Prerequisites
-* Ruby installed
-  *Please go to this [link](https://www.theodinproject.com/courses/web-development-101/lessons/installing-ruby) if you need to install ruby*
-  
+* Ruby installed: *Please go to this [link](https://www.theodinproject.com/courses/web-development-101/lessons/installing-ruby) if you need to install ruby*
+
 ### Usage
 * Run the enumerable.rb in the command line
 
@@ -22,7 +20,7 @@ Assignment 2
 * Ruby
 * Used rubocop for linting
 
-## Authors ![Hireable](https://img.shields.io/badge/HIREABLE-YES-yellowgreen&?style=for-the-badge)
+## Author ![Hireable](https://img.shields.io/badge/HIREABLE-YES-yellowgreen&?style=for-the-badge)
 
 👤 **Luis Saavedra**
 
