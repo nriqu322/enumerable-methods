@@ -56,7 +56,7 @@ module Enumerable
     if block_given?
       my_each { |x| any_true = true if yield(x) }
     else 
-      my_each { |x| any_true = false if x.nil? || x == false }
+      my_each { |x| any_true = true if !x.nil? && x != false }
     end
     any_true
   end
