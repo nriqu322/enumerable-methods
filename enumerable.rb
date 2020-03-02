@@ -107,17 +107,19 @@ module Enumerable
   end
 
   def my_map(proc = nil)
-    return to_enum :my_map unless proc.class == Proc
+    return to_enum :my_map unless block_given? || proc.class == Proc
     new_array = []
-    my_each { |x| new_array << proc.call(x) }
+    if proc.class == Proc
+      my_each { |x| new_array << proc.call(x) }
+    elsif block_given?
+      my_each { |x| new_array << yield(x) }
+    end
     new_array
   end
 end
 
 [1, 2, 3, 4].my_map { |i| i*i }      #=> [1, 4, 9, 16]
 [1, 2, 3, 4].my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
-(1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
-(1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
 
 array = [4, 5, 5]
 my_proc = proc do |num|
