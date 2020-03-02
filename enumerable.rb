@@ -1,7 +1,11 @@
+# rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
 module Enumerable
   def my_each
     # iterate trough an object, takes one parameter
     return to_enum :my_each unless block_given?
+
     i = 0
     while i < length
       yield(self[i])
@@ -12,6 +16,7 @@ module Enumerable
   def my_each_with_index
     # iterate trough an object value and index, takes two parameters
     return to_enum :my_each_with_index unless block_given?
+
     idx = 0
     while idx < length
       yield(self[idx], idx)
@@ -22,6 +27,7 @@ module Enumerable
   def my_select
     # filters values given a condition
     return to_enum :my_select unless block_given?
+
     new_array = []
     my_each { |x| new_array.push(x) if yield(x) }
     new_array
@@ -30,6 +36,7 @@ module Enumerable
   def my_all?(param = nil)
     # evaluates all elements in array and return true if all of them meets the given condition
     return test_param_all(param) unless param.nil?
+
     all_true = true
     if block_given?
       my_each { |x| all_true = false unless yield(x) }
@@ -52,10 +59,11 @@ module Enumerable
   def my_any?(param = nil)
     # evaluates all elements in array and return true if any of them meets the given condition
     return test_param_any(param) unless param.nil?
+
     any_true = false
     if block_given?
       my_each { |x| any_true = true if yield(x) }
-    else 
+    else
       my_each { |x| any_true = true if !x.nil? && x != false }
     end
     any_true
@@ -74,6 +82,7 @@ module Enumerable
   def my_none?(param = nil)
     # evaluates all elements in array and return true if all of them are false
     return test_param_none(param) unless param.nil?
+
     all_false = true
     if block_given?
       my_each { |x| all_false = false if yield(x) }
@@ -108,6 +117,7 @@ module Enumerable
 
   def my_map(proc = nil)
     return to_enum :my_map unless block_given? || proc.class == Proc
+
     new_array = []
     if proc.class == Proc
       my_each { |x| new_array << proc.call(x) }
@@ -118,15 +128,28 @@ module Enumerable
   end
 
   def my_inject(init = nil, sym = nil)
-    if block_given?
-    my_each { |total, n| yield(total, n)}
+    total = self[0]
+    i = 1
+    if init.class == Symbol
+      while i < length
+        total = total.send(init, self[i])
+        i += 1
+      end
+    elsif !init.nil? && init.class == Symbol
+      total = init
+      my_each { |n| total = total.send(sym, n) }
+    elsif init.nil? && sym.nil?
+      while i < length
+        total = yield(total, self[i]) if block_given?
+        i += 1
+      end
+    elsif !init.nil? && sym.nil?
+      total = init
+      my_each { |n| total = yield(total, n) } if block_given?
     end
+    total
   end
 end
-
-
-def multiply_els array
-  array.my_inject(1){|total, element| total * element}
-end
-
-puts multiply_els([2,4,5])
+# rubocop:enable Metrics/ModuleLength
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
