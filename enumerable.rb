@@ -71,30 +71,25 @@ module Enumerable
     end
   end
 
-  # def my_none?
+  def my_none?(param = nil)
     # evaluates all elements in array and return true if all of them are false
-  #  if block_given?
-  #    all_false = true
-  #    self.my_each { |x| all_false = false if yield(x) }
-  #  else
-  #    all_false = true
-  #  end
-  #  all_false
-  # end
+    return test_param_none(param) unless param.nil?
+    all_false = true
+    if block_given?
+      my_each { |x| all_false = false if yield(x) }
+    else
+      my_each { |x| all_false = false unless x.nil? || x == false }
+    end
+    all_false
+  end
+
+  def test_param_none(param)
+    if param.class == Regexp
+      my_none? { |x| x =~ param}
+    elsif param.class == Class
+      my_none? { |x| x.is_a? param}
+    else
+      my_none? { |x| x == param}
+    end
+  end
 end
-
-
-%w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
-%w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
-[nil, true, 99].my_any?(Integer)                     #=> true
-[nil, true, 99].my_any?                              #=> true
-[].any?                                              #=> false
-
-# %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
-# %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
-# %w{ant bear cat}.my_none?(/d/)                        #=> true
-# [1, 3.14, 42].my_none?(Float)                         #=> false
-# [].my_none?                                           #=> true
-# [nil].my_none?                                        #=> true
-# [nil, false].my_none?                                 #=> true
-# [nil, false, true].my_none?                           #=> false
