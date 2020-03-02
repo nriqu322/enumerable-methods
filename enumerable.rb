@@ -32,7 +32,7 @@ module Enumerable
     return test_param_all(param) unless param.nil?
     all_true = true
     if block_given?
-      my_each { |x| all_true = false unless yield(x)}
+      my_each { |x| all_true = false unless yield(x) }
     else
       my_each { |x| all_true = false if x.nil? || x == false }
     end
@@ -41,11 +41,11 @@ module Enumerable
 
   def test_param_all(param)
     if param.class == Regexp
-      my_all? { |x| x =~ param}
+      my_all? { |x| x =~ param }
     elsif param.class == Class
-      my_all? { |x| x.is_a? param}
+      my_all? { |x| x.is_a? param }
     else
-      my_all? { |x| x == param}
+      my_all? { |x| x == param }
     end
   end
 
@@ -63,11 +63,11 @@ module Enumerable
 
   def test_param_any(param)
     if param.class == Regexp
-      my_any? { |x| x =~ param}
+      my_any? { |x| x =~ param }
     elsif param.class == Class
-      my_any? { |x| x.is_a? param}
+      my_any? { |x| x.is_a? param }
     else
-      my_any? { |x| x == param}
+      my_any? { |x| x == param }
     end
   end
 
@@ -85,11 +85,29 @@ module Enumerable
 
   def test_param_none(param)
     if param.class == Regexp
-      my_none? { |x| x =~ param}
+      my_none? { |x| x =~ param }
     elsif param.class == Class
-      my_none? { |x| x.is_a? param}
+      my_none? { |x| x.is_a? param }
     else
-      my_none? { |x| x == param}
+      my_none? { |x| x == param }
     end
   end
+
+  def my_count(param = nil)
+    # count the number of items that meets the condition given
+    total = 0
+    if block_given?
+      my_each { |x| total += 1 if yield(x) }
+    elsif !param.nil?
+      my_each { |x| total += 1 if x == param }
+    else
+      return length
+    end
+    total
+  end
 end
+
+ary = [1, 2, 4, 2]
+ary.my_count               #=> 4
+ary.my_count(2)            #=> 2
+ary.my_count{ |x| x%2==0 } #=> 3
