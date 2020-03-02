@@ -105,9 +105,18 @@ module Enumerable
     end
     total
   end
+
+  def my_map
+    return to_enum :my_map unless block_given?
+    new_array = []
+
+      my_each { |x| new_array << yield(x)}
+
+    new_array
+  end
 end
 
-ary = [1, 2, 4, 2]
-ary.my_count               #=> 4
-ary.my_count(2)            #=> 2
-ary.my_count{ |x| x%2==0 } #=> 3
+[1, 2, 3, 4].my_map { |i| i*i }      #=> [1, 4, 9, 16]
+[1, 2, 3, 4].my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
+(1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
+(1..4).my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
