@@ -116,14 +116,17 @@ module Enumerable
     end
     new_array
   end
+
+  def my_inject(init = nil, sym = nil)
+    if block_given?
+    my_each { |total, n| yield(total, n)}
+    end
+  end
 end
 
-[1, 2, 3, 4].my_map { |i| i*i }      #=> [1, 4, 9, 16]
-[1, 2, 3, 4].my_map { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
 
-array = [4, 5, 5]
-my_proc = proc do |num|
-  num * 2
+def multiply_els array
+  array.my_inject(1){|total, element| total * element}
 end
-result = array.my_map(my_proc)
-puts result
+
+puts multiply_els([2,4,5])
