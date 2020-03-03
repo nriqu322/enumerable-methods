@@ -1,6 +1,7 @@
 # rubocop:disable Metrics/ModuleLength
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/MethodLength
 module Enumerable
   def my_array(arg)
     arg.class == Range ? arg.to_a : arg
@@ -9,7 +10,7 @@ module Enumerable
   def my_each
     # iterate trough an object, takes one parameter
     return to_enum :my_each unless block_given?
-    
+
     arr = my_array(self)
     i = 0
     while i < arr.length
@@ -160,3 +161,4 @@ end
 # rubocop:enable Metrics/ModuleLength
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/MethodLength
