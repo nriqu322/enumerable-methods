@@ -2,13 +2,18 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 module Enumerable
+  def my_array(arg)
+    arg.class == Range ? arg.to_a : arg
+  end
+
   def my_each
     # iterate trough an object, takes one parameter
     return to_enum :my_each unless block_given?
-
+    
+    arr = my_array(self)
     i = 0
-    while i < length
-      yield(self[i])
+    while i < arr.length
+      yield(arr[i])
       i += 1
     end
   end
@@ -17,9 +22,10 @@ module Enumerable
     # iterate trough an object value and index, takes two parameters
     return to_enum :my_each_with_index unless block_given?
 
+    arr = my_array(self)
     idx = 0
-    while idx < length
-      yield(self[idx], idx)
+    while idx < arr.length
+      yield(arr[idx], idx)
       idx += 1
     end
   end
@@ -128,19 +134,20 @@ module Enumerable
   end
 
   def my_inject(init = nil, sym = nil)
-    total = self[0]
+    arr = my_array(self)
+    total = arr[0]
     i = 1
     if init.class == Symbol
-      while i < length
-        total = total.send(init, self[i])
+      while i < arr.length
+        total = total.send(init, arr[i])
         i += 1
       end
-    elsif !init.nil? && init.class == Symbol
+    elsif !init.nil? && sym.class == Symbol
       total = init
       my_each { |n| total = total.send(sym, n) }
     elsif init.nil? && sym.nil?
-      while i < length
-        total = yield(total, self[i]) if block_given?
+      while i < arr.length
+        total = yield(total, arr[i]) if block_given?
         i += 1
       end
     elsif !init.nil? && sym.nil?
