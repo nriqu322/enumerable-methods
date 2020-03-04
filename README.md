@@ -6,7 +6,7 @@ This is a replica of the enumerable methods in Ruby: each, each_with_index, sele
 
 ## Live Demo
 
-[Run on Repl.it](https://repl.it/@nriqu322/enumerable-methods)(available after merge with master)
+[![Run on Repl.it](https://repl.it/badge/github/nriqu322/enumerable-methods)](https://repl.it/github/nriqu322/enumerable-methods)
 
 ## Getting Started
 
