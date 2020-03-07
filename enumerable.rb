@@ -9,7 +9,7 @@ module Enumerable
 
   def my_each
     # iterate trough an object, takes one parameter
-    return to_enum :my_each unless block_given?
+    return to_enum unless block_given?
 
     arr = my_array(self)
     i = 0
@@ -162,3 +162,9 @@ end
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/MethodLength
+
+[1, 2, 3].each { |n| puts text = "Current number is: #{n}"}
+[1, 2, 3].my_each { |n| puts text = "Current number is: #{n}"}
+puts
+[1, 2, 3].each
+[1, 2, 3].my_each
